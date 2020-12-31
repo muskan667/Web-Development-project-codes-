@@ -1,0 +1,54 @@
+#Rules:
+#The computer will think of 3 digit numbers that has no repeating digit
+#You will then guess a three digit number
+#The computer will then give block clues
+#Based on these clues you will guess again until you break the code with a match
+
+#possible Clues:
+#Close:-you have guessed the correct number but in wrong position
+#Match:-you have guessed a correct number in the correct position
+#Nope:-you haven't guessed any of number correctly
+
+
+
+import random
+# Get Guess
+def get_guess():
+    return list(input("What is you guess?"))
+# Generate Computer Code
+def generate_code():
+    digits = [str(num) for num in range(10)]
+    
+    #shuffle the digits
+    random.shuffle(digits)
+    #Then grab the first three
+    return digits[:3]
+# Generate the clues
+def generate_clues(code,user_guess):
+    if user_guess==code:
+        return "Code Cracked!"
+    clues =[]
+    
+    for ind,num in enumerate(user_guess):
+        if num==code[ind]:
+            clues.append("Match")
+        elif num in code:
+            clues.append("Close")
+    
+    if clues==[]:
+        return ["Nope"]
+    else:
+        return clues
+        
+# Run Game logic
+print("Welcome Code Breaker!")
+
+secret_code =generate_code()
+clue_report=[]
+while clue_report !="Code Cracked!":
+    guess = get_guess()
+    clue_report = generate_clues(guess,secret_code)
+    print("Here is the result of guess: ")
+    for clue in clue_report:
+        print(clue)
+    
